@@ -3,8 +3,8 @@
 > Git Feature Branch Tooling.
 
 [![Travis Status](https://travis-ci.org/cjpatoilo/gitfit.svg?branch=master)](https://travis-ci.org/cjpatoilo/gitfit?branch=master)
-[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/yd5ohn9syy91fk7l?svg=true)](https://ci.appveyor.com/project/cjpatoilo/gitfit)
-[![Codacy Status](https://img.shields.io/codacy/grade/5009698540f040ec994a71fc84a4d675/master.svg)](https://www.codacy.com/app/cjpatoilo/gitfit/dashboard)
+[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/2dv8bbpsk492edfe?svg=true)](https://ci.appveyor.com/project/cjpatoilo/gitfit)
+[![Codacy Status](https://img.shields.io/codacy/grade/52941e3f3d6c4eecabb3759e63f4bf58/master.svg)](https://www.codacy.com/app/cjpatoilo/gitfit/dashboard)
 [![Dependencies Status](https://david-dm.org/cjpatoilo/gitfit/status.svg)](https://david-dm.org/cjpatoilo/gitfit)
 [![Version Status](https://badge.fury.io/js/gitfit.svg)](https://www.npmjs.com/package/gitfit)
 [![Download Status](https://img.shields.io/npm/dt/gitfit.svg)](https://www.npmjs.com/package/gitfit)
