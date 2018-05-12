@@ -1,9 +1,11 @@
 #!/usr/bin/env node
-const { exec, exit } = require('shelljs')
-const rasper = require('rasper')
 const gitBranch = require('git-branch')
+const rasper = require('rasper')
+const { exec } = require('child_process')
+
 const { error, log } = console
-const options = process.argv[0].match(/node/i) ? rasper(process.argv.slice(2)) : exit(2)
+const { argv, exit } = process
+const options = argv[0].match(/node/i) ? rasper(argv.slice(2)) : exit(2)
 const command = options._[0]
 const argument = options._[1]
 
@@ -33,21 +35,27 @@ if (options.version) {
 }
 
 if (command === 'init') {
-	exec(`git init && git commit --allow-empty -m 'Initial commit'`, err => err && error(`[error] Gitfit init command has error`))
+	exec(`git init`)
+	exec(`git commit --allow-empty -m 'Initial commit'`)
 	exit(2)
 }
 
 if (command === 'start') {
 	if (!argument) error(`[error] Feature name is required\n[info] $ gitfit start <feature-name>`)
-	else exec(`git checkout -b feature/${argument} master`, err => err && error(`[error] Gitfit start command has error`))
+	else exec(`git checkout -b feature/${argument} master`)
 	exit(2)
 }
 
 if (command === 'finish') {
 	gitBranch().then(branch => {
 		if (!argument) error(`[error] Tag is required\n[info] $ gitfit finish <new-tag>`)
-		else if (branch === 'master' || !branch.indexOf(/feature\//)) error(`[error] Branch should be a feature branch\n[info] $ gitfit finish <new-tag>`)
-		else exec('git', ['checkout master', `merge --no-ff ${branch}`, `tag -a ${argument}`, `git branch -d ${branch}`], err => err && error(`[error] Gitfit finish command has error`))
+		else if (branch === 'master' || !branch.indexOf(/feature\//)) error(`[error] Branch should be a feature branch e.g.: $ gitfit finish <new-tag>`)
+		else {
+			exec(`git checkout master`)
+			exec(`git merge --no-ff ${branch}`)
+			exec(`git tag -a ${argument} -m ''`)
+			exec(`git branch -d ${branch}`)
+		}
 		exit(2)
 	})
 }
