@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const gitBranch = require('git-branch')
 const rasper = require('rasper')
+const pkg = require('./package.json')
 const { exec } = require('child_process')
 
 const { error, log } = console
@@ -30,7 +31,7 @@ Examples:
 }
 
 if (options.version) {
-	log(`v${version}`)
+	log(`v${pkg.version}`)
 	exit(2)
 }
 
