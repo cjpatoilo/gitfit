@@ -3,8 +3,10 @@ const { exec } = require('child_process')
 const rasper = require('rasper')
 const { error, log } = console
 const options = process.argv[0].match(/node/i) ? rasper(process.argv.slice(2)) : process.exit(2)
+const command = options._[0]
+const argument = options._[1]
+const branch = exec(`git branch`)
 
-// help
 if (options.help) {
 	log(`
 Usage:
@@ -25,28 +27,25 @@ Examples:
 	process.exit(2)
 }
 
-// version
 if (options.version) {
 	log(`v${version}`)
 	process.exit(2)
 }
 
-// init
-if (options._[0].match(/init/)) {
+if (command.match(/init/)) {
 	exec(`git init && git commit --allow-empty -m 'Initial commit'`)
 	process.exit(2)
 }
 
-// start
-if (options._[0].match(/start/)) {
-	if (options._[1]) exec(`git checkout -b feature/${options._[1]} master'`)
-	else error(`[error] Feature name is required\n[info] $ gitfit start <feature-name>`)
+if (command.match(/start/)) {
+	if (!argument) error(`[error] Feature name is required\n[info] $ gitfit start <feature-name>`)
+	else exec(`git checkout -b feature/${argument} master'`)
 	process.exit(2)
 }
 
-// finish
-if (options._[0].match(/finish/)) {
-	if (options._[1]) exec(`git checkout master && git merge --no-ff feature/${branch} && git tag -a ${newVersion} && git branch -d feature/${branch}'`)
-	else error(`[error] Tag is required\n[info] $ gitfit finish <new-tag>`)
+if (command.match(/finish/)) {
+	if (!branch.match('feature/')) error(`[error] Tag is required\n[info] $ gitfit finish <new-tag>`)
+	else if (!argument) error(`[error] Tag is required\n[info] $ gitfit finish <new-tag>`)
+	else exec(`git checkout master && git merge --no-ff feature/${branch} && git tag -a ${argument} && git branch -d feature/${branch}'`)
 	process.exit(2)
 }
