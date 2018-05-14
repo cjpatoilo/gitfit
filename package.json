@@ -40,7 +40,7 @@
 		"node": ">=6"
 	},
 	"scripts": {
-		"prepush": "marshmallow -o docs -t 'Gitfit - Git Feature Branch Tooling.' -i artwork.psd -f -m && inject-ga docs/index.html -o docs/index.html -c 'UA-24389952-13' && boeing docs && rimraf docs",
+		"deploy": "marshmallow -o docs -t 'Gitfit - Git Feature Branch Tooling.' -i artwork.psd -f -m && inject-ga docs/index.html -o docs/index.html -c 'UA-24389952-13' && boeing docs && rimraf docs",
 		"precommit": "npm t",
 		"test": "nyc ava && eslint . -c styled --ignore-path .gitignore && editorconfig-tools check ."
 	}
