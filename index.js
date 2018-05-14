@@ -1,40 +1,40 @@
 #!/usr/bin/env node
+const { exec } = require('child_process')
 const gitBranch = require('git-branch')
 const rasper = require('rasper')
-const { exec } = require('child_process')
 const pkg = require('./package.json')
 
 const { error, log } = console
 const { argv, exit } = process
-const { help, version, _ } = argv[0].match(/node/i) ? rasper(argv.slice(2)) : exit(2)
-const command = _[0]
-const argument = _[1]
+const options = argv[0].match(/node/i) ? rasper(argv.slice(2)) : exit(2)
+options.command = options._[0]
+options.argument = options._[1]
 
-if (help) {
+if (options.help) {
 	help()
 	exit(2)
 }
 
-if (version) {
-	semver()
+if (options.version) {
+	version(pkg.version)
 	exit(2)
 }
 
-switch (command) {
+switch (options.command) {
 	case 'init':
 		init()
 		exit(2)
 		break
 	case 'start':
-		start(argument)
+		start(options.argument)
 		exit(2)
 		break
 	case 'finish':
-		finish(branch, argument)
+		gitBranch().then(branch => finish(branch, options.argument))
 		exit(2)
 		break
 	case 'publish':
-		publish(branch)
+		gitBranch().then(branch => publish(branch))
 		exit(2)
 		break
 	default:
@@ -66,8 +66,8 @@ Examples:
 	`)
 }
 
-function semver() {
-	log(`v${pkg.version}`)
+function version(version) {
+	log(`v${version}`)
 }
 
 function init() {
@@ -81,16 +81,14 @@ function start(argument) {
 }
 
 function finish(branch, argument) {
-	gitBranch().then(branch => {
-		if (!argument) error(`[error] Tag is required\n[info] $ gitfit finish <new-tag>`)
-		else if (branch === 'master' || !branch.indexOf(/feature\//)) error(`[error] Branch should be a feature branch e.g.: $ gitfit finish <new-tag>`)
-		else {
-			exec(`git checkout master`)
-			exec(`git merge --no-ff ${branch} -m "Merge branch '${branch}'"`)
-			exec(`git tag -a ${argument} -m ''`)
-			exec(`git branch -D ${branch}`)
-		}
-	})
+	if (!argument) error(`[error] Tag is required\n[info] $ gitfit finish <new-tag>`)
+	else if (branch === 'master' || !branch.indexOf(/feature\//)) error(`[error] Branch should be a feature branch e.g.: $ gitfit finish <new-tag>`)
+	else {
+		exec(`git checkout master`)
+		exec(`git merge --no-ff ${branch} -m "Merge branch '${branch}'"`)
+		exec(`git tag -a ${argument} -m ''`)
+		exec(`git branch -D ${branch}`)
+	}
 }
 
 function publish(branch) {
