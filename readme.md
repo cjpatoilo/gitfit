@@ -1,4 +1,4 @@
-<a align="center" href="https://cjpatoilo.com/gitfit"><img width="100%" src="https://cjpatoilo.com/gitfit/artwork.png" alt="Gitfit - Git Feature Branch Tooling."></a>
+<a align="center" href="https://github.com/cjpatoilo/gitfit"><img width="100%" src="https://cjpatoilo.com/gitfit/artwork.png" alt="Gitfit - Git Feature Branch Tooling."></a>
 
 > Git Feature Branch Tooling.
 
