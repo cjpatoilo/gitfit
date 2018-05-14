@@ -49,13 +49,18 @@ $ npx gitfit
 	Options:
 
 		-h, --help              Display help information
-		-v, --version           Output Initify version
+		-v, --version           Output version
+		init                    Initializy repository
+		start                   Start new feature branch
+		finish                  Finish feature branch
+		publish                 Publish master branch or feature branch
 
 	Examples:
 
 		$ gitfit init
 		$ gitfit start <feature-name>
 		$ gitfit finish <new-tag>
+		$ gitfit publish
 ```
 
 

@@ -20,28 +20,26 @@ if (version) {
 	exit(2)
 }
 
-if (command) {
-	switch () {
-		case 'init':
-			init()
-			exit(2)
-			break
-		case 'start':
-			start(argument)
-			exit(2)
-			break
-		case 'finish':
-			finish(branch, argument)
-			exit(2)
-			break
-		case 'publish':
-			publish(branch)
-			exit(2)
-			break
-		default:
-			help()
-			exit(2)
-	}
+switch (command) {
+	case 'init':
+		init()
+		exit(2)
+		break
+	case 'start':
+		start(argument)
+		exit(2)
+		break
+	case 'finish':
+		finish(branch, argument)
+		exit(2)
+		break
+	case 'publish':
+		publish(branch)
+		exit(2)
+		break
+	default:
+		help()
+		exit(2)
 }
 
 function help() {
@@ -53,13 +51,18 @@ Usage:
 Options:
 
 	-h, --help              Display help information
-	-v, --version           Output Initify version
+	-v, --version           Output version
+	init                    Create Initializy repository
+	start                   Start new feature branch
+	finish                  Finish feature branch
+	publish                 Publish master branch or feature branch
 
 Examples:
 
 	$ gitfit init
 	$ gitfit start <feature-name>
 	$ gitfit finish <new-tag>
+	$ gitfit publish
 	`)
 }
 
