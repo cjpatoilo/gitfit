@@ -2,6 +2,7 @@
 const gitBranch = require('git-branch')
 const rasper = require('rasper')
 const { exec } = require('child_process')
+const pkg = require('./package.json')
 
 const { error, log } = console
 const { argv, exit } = process
@@ -63,7 +64,7 @@ Examples:
 }
 
 function semver() {
-	log(`v${version}`)
+	log(`v${pkg.version}`)
 }
 
 function init() {
