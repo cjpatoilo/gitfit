@@ -5,11 +5,45 @@ const { exec } = require('child_process')
 
 const { error, log } = console
 const { argv, exit } = process
-const options = argv[0].match(/node/i) ? rasper(argv.slice(2)) : exit(2)
-const command = options._[0]
-const argument = options._[1]
+const { help, version, _ } = argv[0].match(/node/i) ? rasper(argv.slice(2)) : exit(2)
+const command = _[0]
+const argument = _[1]
 
-if (options.help) {
+if (help) {
+	help()
+	exit(2)
+}
+
+if (version) {
+	semver()
+	exit(2)
+}
+
+if (command) {
+	switch () {
+		case 'init':
+			init()
+			exit(2)
+			break
+		case 'start':
+			start(argument)
+			exit(2)
+			break
+		case 'finish':
+			finish(branch, argument)
+			exit(2)
+			break
+		case 'publish':
+			publish(branch)
+			exit(2)
+			break
+		default:
+			help()
+			exit(2)
+	}
+}
+
+function help() {
 	log(`
 Usage:
 
@@ -26,36 +60,36 @@ Examples:
 	$ gitfit start <feature-name>
 	$ gitfit finish <new-tag>
 	`)
-	exit(2)
 }
 
-if (options.version) {
+function semver() {
 	log(`v${version}`)
-	exit(2)
 }
 
-if (command === 'init') {
+function init() {
 	exec(`git init`)
 	exec(`git commit --allow-empty -m 'Initial commit'`)
-	exit(2)
 }
 
-if (command === 'start') {
+function start(argument) {
 	if (!argument) error(`[error] Feature name is required\n[info] $ gitfit start <feature-name>`)
 	else exec(`git checkout -b feature/${argument} master`)
-	exit(2)
 }
 
-if (command === 'finish') {
+function finish(branch, argument) {
 	gitBranch().then(branch => {
 		if (!argument) error(`[error] Tag is required\n[info] $ gitfit finish <new-tag>`)
 		else if (branch === 'master' || !branch.indexOf(/feature\//)) error(`[error] Branch should be a feature branch e.g.: $ gitfit finish <new-tag>`)
 		else {
 			exec(`git checkout master`)
-			exec(`git merge --no-ff ${branch}`)
+			exec(`git merge --no-ff ${branch} -m "Merge branch '${branch}'"`)
 			exec(`git tag -a ${argument} -m ''`)
-			exec(`git branch -d ${branch}`)
+			exec(`git branch -D ${branch}`)
 		}
-		exit(2)
 	})
+}
+
+function publish(branch) {
+	exec(`git push origin ${branch.indexOf(/feature\//) ? branch : 'master'}`)
+	exec(`git push origin --tags`)
 }
