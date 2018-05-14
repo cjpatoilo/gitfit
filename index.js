@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { exec } = require('child_process')
+const { execSync } = require('child_process')
 const gitBranch = require('git-branch')
 const rasper = require('rasper')
 const pkg = require('./package.json')
@@ -71,27 +71,27 @@ function version(version) {
 }
 
 function init() {
-	exec(`git init`)
-	exec(`git commit --allow-empty -m 'Initial commit'`)
+	execSync(`git init`, { stdio: 'inherit' })
+	execSync(`git commit --allow-empty -m 'Initial commit'`, { stdio: 'inherit' })
 }
 
 function start(argument) {
 	if (!argument) error(`[error] Feature name is required\n[info] $ gitfit start <feature-name>`)
-	else exec(`git checkout -b feature/${argument} master`)
+	else execSync(`git checkout -b feature/${argument} master`, { stdio: 'inherit' })
 }
 
 function finish(branch, argument) {
 	if (!argument) error(`[error] Tag is required\n[info] $ gitfit finish <new-tag>`)
 	else if (branch === 'master' || !branch.indexOf(/feature\//)) error(`[error] Branch should be a feature branch e.g.: $ gitfit finish <new-tag>`)
 	else {
-		exec(`git checkout master`)
-		exec(`git merge --no-ff ${branch} -m "Merge branch '${branch}'"`)
-		exec(`git tag -a ${argument} -m ''`)
-		exec(`git branch -D ${branch}`)
+		execSync(`git checkout master`, { stdio: 'inherit' })
+		execSync(`git merge --no-ff ${branch} -m "Merge branch '${branch}'"`, { stdio: 'inherit' })
+		execSync(`git tag -a ${argument} -m ''`, { stdio: 'inherit' })
+		execSync(`git branch -D ${branch}`, { stdio: 'inherit' })
 	}
 }
 
 function publish(branch) {
-	exec(`git push origin ${branch.indexOf(/feature\//) ? branch : 'master'}`)
-	exec(`git push origin --tags`)
+	execSync(`git push origin ${branch.indexOf(/feature\//) ? branch : 'master'}`, { stdio: 'inherit' })
+	execSync(`git push origin --tags`, { stdio: 'inherit' })
 }
