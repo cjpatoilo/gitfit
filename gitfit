@@ -1,0 +1,120 @@
+#!/bin/bash
+#set -e
+
+BOLD_START=$(tput bold)
+BOLD_END=$(tput sgr0)
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+HELP="Usage:
+
+  $ gitfit <command> [<options>]
+
+Options:
+
+  -h, --help              Display help information
+  -v, --version           Output version
+  init                    Initializy repository
+  start                   Start new feature branch
+  finish                  Finish feature branch
+  publish                 Publish master branch or feature branch
+
+Examples:
+
+  $ gitfit init
+  $ gitfit start <feature-name>
+  $ gitfit finish <new-tag> [<main_branch>]
+  $ gitfit publish"
+
+init () {
+  git init
+  git commit --allow-empty -m "Initial commit"
+}
+
+start () {
+	if [ -z "$2" ] || [ -n "$3" ]
+	then
+		echo -e "\033[0;31m${HELP}"
+		exit 2
+	fi
+
+	echo "New branch ${BOLD_START}feature/${2}${BOLD_END} from ${BOLD_START}${1}${BOLD_END}"
+
+	read -r -p "Are you sure? [y/N] " response
+	case "$response" in
+	    [yY][eE][sS]|[yY])
+	        git checkout -b feature/$2 $1
+	        ;;
+	    *)
+					exit 0
+	        ;;
+	esac
+}
+
+finish () {
+	if [ -z "$2" ] || [ -n "$4" ]
+	then
+		echo -e "\033[0;31m${HELP}"
+		exit 2
+	fi
+	if [ -z "$3" ]
+	then
+		MAIN_BRANCH="master"
+	else
+		MAIN_BRANCH="${3}"
+	fi
+
+	echo "Merge branch ${BOLD_START}${1}${BOLD_END} into ${BOLD_START}${MAIN_BRANCH}${BOLD_END} adding tag ${BOLD_START}${2}${BOLD_END}"
+
+	read -r -p "Are you sure? [y/N] " response
+	case "$response" in
+	    [yY][eE][sS]|[yY])
+	        git checkout $MAIN_BRANCH
+					git merge --no-ff $1 -m "Merge branch '${1}'"
+					git tag -a $2 -m ""
+					git branch -D $1
+	        ;;
+	    *)
+					exit 0
+	        ;;
+	esac
+}
+
+publish () {
+  git push origin $1
+	git push origin --tags
+}
+
+for ARGS in "$@"
+do
+  if [ "${ARGS}" = "-h" ] || [ "${ARGS}" = "--help" ]
+  then
+    echo "${HELP}"
+    exit 0
+  fi
+  if [ "${ARGS}" = "-v" ] || [ "${ARGS}" = "--version" ]
+  then
+    seq "${#@}" | grep -m1 version package.json | awk -F: "{ print ${INDEX} }" | sed -E -e 's/[version:",[:blank:]]+//g'
+    exit 0
+  fi
+  if [ "${ARGS}" = "i" ] || [ "${ARGS}" = "init" ]
+  then
+    init
+    exit 0
+  fi
+  if [ "${ARGS}" = "s" ] || [ "${ARGS}" = "start" ]
+  then
+    start $CURRENT_BRANCH $2 $3
+    exit 0
+  fi
+  if [ "${ARGS}" = "f" ] || [ "${ARGS}" = "finish" ]
+  then
+    finish $CURRENT_BRANCH $2 $3 $4
+    exit 0
+  fi
+  if [ "${ARGS}" = "p" ] || [ "${ARGS}" = "publish" ]
+  then
+    publish $CURRENT_BRANCH
+    exit 0
+  fi
+done
+
+exit 0
