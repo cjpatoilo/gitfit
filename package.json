@@ -6,7 +6,7 @@
 	"repository": "cjpatoilo/gitfit",
 	"license": "MIT",
 	"author": "CJ Patoilo <cjpatoilo@gmail.com>",
-	"bin": "index.js",
+	"bin": "gitfit",
 	"keywords": [
 		"git",
 		"github",
@@ -21,8 +21,6 @@
 		".travis.yml"
 	],
 	"dependencies": {
-		"git-branch": "^2.0.1",
-		"rasper": "latest"
 	},
 	"devDependencies": {
 		"boeing": "latest",
