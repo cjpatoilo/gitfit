@@ -38,14 +38,14 @@ start () {
 
 	echo "New branch ${BOLD_START}feature/${2}${BOLD_END} from ${BOLD_START}${1}${BOLD_END}"
 
-	read -r -p "Are you sure? [y/N] " response
+	read -r -p "${BOLD_START}Are you sure?${BOLD_END} (Y/n) " response
 	case "$response" in
-	    [yY][eE][sS]|[yY])
-	        git checkout -b feature/$2 $1
-	        ;;
-	    *)
-					exit 0
-	        ;;
+		[yY][eE][sS]|[yY])
+			git checkout -b feature/$2 $1
+			;;
+		*)
+			exit 0
+			;;
 	esac
 }
 
@@ -64,17 +64,17 @@ finish () {
 
 	echo "Merge branch ${BOLD_START}${1}${BOLD_END} into ${BOLD_START}${MAIN_BRANCH}${BOLD_END} adding tag ${BOLD_START}${2}${BOLD_END}"
 
-	read -r -p "Are you sure? [y/N] " response
+	read -r -p "${BOLD_START}Are you sure?${BOLD_END} (Y/n) " response
 	case "$response" in
-	    [yY][eE][sS]|[yY])
-	        git checkout $MAIN_BRANCH
-					git merge --no-ff $1 -m "Merge branch '${1}'"
-					git tag -a $2 -m ""
-					git branch -D $1
-	        ;;
-	    *)
-					exit 0
-	        ;;
+		[yY][eE][sS]|[yY])
+			git checkout $MAIN_BRANCH
+			git merge --no-ff $1 -m "Merge branch '${1}'"
+			git tag -a $2 -m ""
+			git branch -D $1
+			;;
+		*)
+			exit 0
+			;;
 	esac
 }
 
