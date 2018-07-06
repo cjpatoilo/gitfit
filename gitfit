@@ -117,4 +117,5 @@ do
   fi
 done
 
-exit 0
+echo -e "\033[0;31m${HELP}"
+exit 2
