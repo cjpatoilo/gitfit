@@ -60,7 +60,7 @@ $ npx gitfit
 		$ gitfit init
 		$ gitfit start <feature-name>
 		$ gitfit finish <new-tag> [<main_branch>] # default: master
-		$ gitfit publish
+		$ gitfit publish [<remote-branch>]  # default: current branch
 ```
 
 
