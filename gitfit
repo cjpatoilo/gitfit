@@ -21,8 +21,8 @@ Examples:
 
   $ gitfit init
   $ gitfit start <feature-name>
-  $ gitfit finish <new-tag> [<main_branch>]
-  $ gitfit publish"
+  $ gitfit finish <new-tag> [<main_branch>] # default: master
+  $ gitfit publish [<remote-branch>]  # default: current branch"
 
 init () {
   git init
@@ -79,8 +79,31 @@ finish () {
 }
 
 publish () {
-  git push origin $1
-	git push origin --tags
+	if [ -z "$2" ] || [ -n "$3" ]
+	then
+		echo -e "\033[0;31m${HELP}"
+		exit 2
+	fi
+	if [ -z "$2" ]
+	then
+		REMOTE_BRANCH="${1}"
+	else
+		MAIN_BRANCH="${2}"
+	fi
+
+	REMOTE=$(git remote get-url origin 2>/dev/null)
+	echo "Publish ${BOLD_START}${1}${BOLD_END} local branch in ${BOLD_START}${REMOTE_BRANCH}${BOLD_END} remote branch using ${BOLD_START}${REMOTE}${BOLD_END} remote"
+
+	read -r -p "${BOLD_START}Are you sure?${BOLD_END} (Y/n) " response
+	case "$response" in
+		[yY][eE][sS]|[yY])
+			git push origin $REMOTE_BRANCH
+			git push origin --tags
+			;;
+		*)
+			exit 0
+			;;
+	esac
 }
 
 for ARGS in "$@"
