@@ -1,6 +1,6 @@
 {
 	"name": "gitfit",
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"description": "Git Feature Branch Tooling.",
 	"homepage": "https://cjpatoilo.com/gitfit",
 	"repository": "cjpatoilo/gitfit",
