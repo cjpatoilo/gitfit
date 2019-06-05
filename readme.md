@@ -20,6 +20,12 @@ The core idea behind the Feature Branch Workflow is that all feature development
 
 ## Install
 
+**Install with Homebrew**
+
+```sh
+$ brew install gitfit
+```
+
 **Install with npm**
 
 ```sh
@@ -35,7 +41,7 @@ $ yarn global add gitfit
 **Run with npx (without installing)**
 
 ```sh
-$ npx gitfit
+$ npx gitfit <command> [<options>]
 ```
 
 
