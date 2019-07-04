@@ -31,7 +31,7 @@
 		"rimraf": "^2.6.2"
 	},
 	"engines": {
-		"node": ">=8"
+		"node": ">=10.0.0"
 	},
 	"scripts": {
 		"deploy": "marshmallow -o docs -t 'Gitfit - Git Feature Branch Tooling.' -i artwork.psd -f -m && inject-ga docs/index.html -o docs/index.html -c 'UA-24389952-13' && boeing docs && rimraf docs",
