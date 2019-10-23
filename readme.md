@@ -1,4 +1,4 @@
-<a align="center" href="https://github.com/cjpatoilo/gitfit"><img width="100%" src="https://cjpatoilo.com/gitfit/artwork.png" alt="Gitfit - Git Feature Branch Tooling."></a>
+<a href="https://github.com/cjpatoilo/gitfit"><img width="100%" src="https://cjpatoilo.com/gitfit/artwork.png" alt="Gitfit - Git Feature Branch Tooling."></a>
 
 > Git Feature Branch Tooling.
 
@@ -72,9 +72,9 @@ $ npx gitfit <command> [<options>]
 
 ## Contributing
 
-Want to contribute? Follow these [recommendations](.github/contributing.md).
+Want to contribute? Follow these [recommendations](https://github.com/cjpatoilo/gitfit#contributing).
 
 
 ## License
 
-Designed with ♥ by [CJ Patoilo](https://twitter.com/cjpatoilo). Licensed under the [MIT License](license).
+Designed with ♥ by [CJ Patoilo](https://twitter.com/cjpatoilo). Licensed under the [MIT License](https://github.com/cjpatoilo/gitfit#license).
