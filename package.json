@@ -1,11 +1,12 @@
 {
 	"name": "gitfit",
-	"version": "0.5.3",
+	"version": "0.6.0",
 	"description": "Git Feature Branch Tooling.",
 	"homepage": "https://cjpatoilo.com/gitfit",
 	"repository": "cjpatoilo/gitfit",
 	"license": "MIT",
 	"author": "CJ Patoilo <cjpatoilo@gmail.com>",
+	"private": false,
 	"bin": "gitfit",
 	"keywords": [
 		"git",
@@ -22,19 +23,38 @@
 	],
 	"dependencies": {},
 	"devDependencies": {
+		"ava": "^2.4.0",
 		"boeing": "latest",
-		"editorconfig-tools": "^0.1.1",
-		"husky": "^3.0.0",
+		"husky": "^3.0.9",
 		"inject-ga": "^0.2.4",
+		"lint-staged": "^9.4.2",
 		"marshmallow": "latest",
-		"rimraf": "^2.6.3"
-	},
-	"engines": {
-		"node": ">=10.0.0"
+		"nyc": "^14.1.1",
+		"prettier-standard": "^15.0.1",
+		"rimraf": "^3.0.0"
 	},
 	"scripts": {
-		"deploy": "marshmallow -o docs -t 'Gitfit - Git Feature Branch Tooling.' -i artwork.psd -f -m && inject-ga docs/index.html -o docs/index.html -c 'UA-24389952-13' && boeing docs && rimraf docs",
-		"precommit": "npm t",
-		"test": "echo \"Add test here.\""
+		"deploy": "marshmallow -o docs -i artwork.psd -f -m && inject-ga docs/index.html -o docs/index.html -c 'UA-24389952-13' && boeing docs && rimraf docs",
+		"lint": "prettier-standard --check",
+		"test": "nyc ava"
+	},
+	"engines": {
+		"node": "^12.13.0"
+	},
+	"prettier": {
+		"jsxSingleQuote": false,
+		"trailingComma": "all"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged",
+			"pre-push": "npm run deploy"
+		}
+	},
+	"lint-staged": {
+		"src/**/*": [
+			"prettier-standard --format",
+			"git add"
+		]
 	}
 }
