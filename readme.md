@@ -18,7 +18,7 @@ The core idea behind the Feature Branch Workflow is that all feature development
 -- Inspired by [Git Feature Branch Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow) (@atlassian).
 
 
-## Install
+## Getting Started
 
 **Install with Homebrew**
 
