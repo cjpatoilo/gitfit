@@ -88,7 +88,7 @@ Look at how the code is being maintained, we must always be consistent. We try t
 			color: #000
 ```
 
-*NOTE: The best way to learn about that is to just install it and give it a try on your code. This project uses an `.editorconfig` file, which most editors support, to enforce these coding standards.*
+_NOTE: The best way to learn about that is to just install it and give it a try on your code._
 
 ## Test
 

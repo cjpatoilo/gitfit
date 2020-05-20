@@ -10,13 +10,11 @@
 [![Download Status](https://img.shields.io/npm/dt/gitfit.svg)](https://www.npmjs.com/package/gitfit)
 [![Gitter Chat](https://img.shields.io/badge/gitter-join_the_chat-4cc61e.svg)](https://gitter.im/cjpatoilo/gitfit)
 
-
 ## Why it's awesome
 
 The core idea behind the Feature Branch Workflow is that all feature development should take place in a dedicated branch instead of the master branch. This encapsulation makes it easy for multiple developers to work on a particular feature without disturbing the main codebase. It also means the master branch will never contain broken code, which is a huge advantage for continuous integration environments.
 
 -- Inspired by [Git Feature Branch Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow) (@atlassian).
-
 
 ## Getting Started
 
@@ -44,37 +42,34 @@ $ yarn global add gitfit
 $ npx gitfit <command> [<options>]
 ```
 
-
 ## Usage
 
 ```
-	Usage:
+Usage:
 
-		$ gitfit <command> [<options>]
+	$ gitfit <command> [<options>]
 
-	Options:
+Options:
 
-		-h, --help              Display help information
-		-v, --version           Output version
-		init                    Initializy repository
-		start                   Start new feature branch
-		finish                  Finish feature branch
-		publish                 Publish master branch or feature branch
+	-h, --help              Display help information
+	-v, --version           Output version
+	init                    Initializy repository
+	start                   Start new feature branch
+	finish                  Finish feature branch
+	publish                 Publish master branch or feature branch
 
-	Examples:
+Examples:
 
-		$ gitfit init
-		$ gitfit start <feature-name>
-		$ gitfit finish <new-tag> [<main_branch>] # default: master
-		$ gitfit publish [<remote-branch>]  # default: current branch
+	$ gitfit init
+	$ gitfit start <feature-name>
+	$ gitfit finish <new-tag> [<main_branch>] # default: master
+	$ gitfit publish [<remote-branch>]  # default: current branch
 ```
-
 
 ## Contributing
 
-Want to contribute? Follow these [recommendations](https://github.com/cjpatoilo/gitfit#contributing).
-
+Want to contribute? Follow these [recommendations](https://github.com/cjpatoilo/gitfit/contribute).
 
 ## License
 
-Designed with ♥ by [CJ Patoilo](https://twitter.com/cjpatoilo). Licensed under the [MIT License](https://github.com/cjpatoilo/gitfit#license).
+Designed with ♥ by [CJ Patoilo](https://twitter.com/cjpatoilo). Licensed under the [MIT License](https://cjpatoilo.com/license).
